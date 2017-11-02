@@ -8,7 +8,7 @@ For effective twitter ads operation, we need to find the massive users. But twit
 
 This script enables you lookup twitter predation target users. Crawler loads user information from twitter api, filters and stores them to the database. After that processing, you can download users by CSV file.
 
-# How to work?
+# Setup youmu.
 
 This is very very normal Ruby on Rails apps. Do investigate yourself!
 
