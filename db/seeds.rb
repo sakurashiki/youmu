@@ -23,5 +23,5 @@ client = User.new.connected_by(AccessToken.first.id).client
 screen_names.each do |screen_name|
   twitter = client.user(screen_name)
   p "Store: #{twitter.screen_name} - #{twitter.name}"
-  User.store_from_twitter(twitter, data_status: User::GOOD_STATE)
+  User.store_from_twitter(twitter, data_status: User::CRAWLABLE_TARGET_USER)
 end
