@@ -76,7 +76,7 @@ class User < ApplicationRecord
           create_from_twitter(twitter_user, CRAWLABLE_TARGET_USER)
         end
       end
-      update(data_status: CRAWLED_TARGET_USER)
+      User.where(internal_id: internal_id).update(data_status: CRAWLED_TARGET_USER)
       true
     end
   end
