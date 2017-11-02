@@ -4,8 +4,8 @@ development:
   reconnect: false
   database: youmu_development
   pool: 5
-  username: root
-  password: youmu
+  username: <%= Rails.application.secrets.database_username %>
+  password: <%= Rails.application.secrets.database_password %>
   host: localhost
 
 test:
@@ -14,8 +14,8 @@ test:
   reconnect: false
   database: youmu_test
   pool: 5
-  username: root
-  password: youmu
+  username: <%= Rails.application.secrets.database_username %>
+  password: <%= Rails.application.secrets.database_password %>
   host: localhost
 
 production:
@@ -24,6 +24,6 @@ production:
   reconnect: false
   database: youmu_production
   pool: 5
-  username: root
-  password: youmu
+  username: <%= Rails.application.secrets.database_username %>
+  password: <%= Rails.application.secrets.database_password %>
   host: localhost
