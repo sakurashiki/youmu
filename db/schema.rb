@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20171102070323) do
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "internal_id"
+    t.bigint "internal_id"
     t.string "screen_name"
     t.integer "data_status"
     t.integer "followers_count"

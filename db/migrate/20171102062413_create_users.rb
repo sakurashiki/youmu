@@ -3,7 +3,7 @@
 class CreateUsers < ActiveRecord::Migration[5.1]
   def change
     create_table :users do |t|
-      t.integer :internal_id
+      t.integer :internal_id, limit: 8
       t.string :screen_name
       t.integer :data_status
       t.integer :followers_count
