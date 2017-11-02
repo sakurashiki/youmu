@@ -33,6 +33,25 @@ production:
   secret_key_base: <%= ENV["SECRET_KEY_BASE"] %>
 ```
 
+# Execute script.
+
+Execute rails console command on bash.
+
+```bash
+LOOKUP_LANG=ja LOOKUP_STRING=soundcloud.com rails c
+```
+
+Just call an `User.crawl()` method. There are 2 argument to adjust crawling process.
+
+- offset: start point of loading.
+- limit: how many users to crawl.
+
+```ruby
+# example
+User.crawl(limit: 100)
+User.crawl(offset: 10, limit: 100)
+```
+
 # License
 
 It still not be under the open source license.
