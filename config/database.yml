@@ -1,0 +1,29 @@
+development:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: youmu_development
+  pool: 5
+  username: root
+  password: youmu
+  host: localhost
+
+test:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: youmu_test
+  pool: 5
+  username: root
+  password: youmu
+  host: localhost
+
+production:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: youmu_production
+  pool: 5
+  username: root
+  password: youmu
+  host: localhost
