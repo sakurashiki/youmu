@@ -8,4 +8,10 @@ This script enables you lookup twitter predation target users. Crawler loads use
 
 # How to work?
 
-This is very very normal Ruby on Rails apps. See google results 😁😁😁
+This is very very normal Ruby on Rails apps. Do investigate yourself 😁😁😁
+
+-> http://rubyonrails.org/
+
+# License
+
+Still not open source license. Decide to coming soon...
