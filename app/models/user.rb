@@ -38,6 +38,13 @@ class User < ApplicationRecord
       )
     end
 
+    def crawl(offset, limit)
+      User.where(data_status: 1).order(followers_count: :desc)
+          .offset(offset).limit(limit).map(&:internal_id).each do |id|
+        User.crawl_friend(id)
+      end
+    end
+
     def string_contains?(twitter_user)
       return false unless twitter_user.lang == ENV['LOOKUP_LANG']
       return true if twitter_user.name.include?(ENV['LOOKUP_STRING'])
