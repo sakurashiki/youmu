@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+
 class User < ApplicationRecord
-  WAIT_TO_CRAWL_STATE = 0
-  BAD_STATE = 1
-  GOOD_STATE = 2
+  NOT_TARGET_USER       = 0
+  CRAWLABLE_TARGET_USER = 1
+  CRAWLED_TARGET_USER   = 2
 
   class << self
     def store_from_twitter(twitter_user, data_status: 1)
@@ -21,7 +23,8 @@ class User < ApplicationRecord
         screen_name: twitter_user.screen_name,
         followers_count: twitter_user.followers_count,
         friends_count: twitter_user.friends_count,
-        data_status: data_status
+        data_status: data_status,
+        lang: twitter_user.lang
       )
     end
 
@@ -30,8 +33,51 @@ class User < ApplicationRecord
         screen_name: twitter_user.screen_name,
         followers_count: twitter_user.followers_count,
         friends_count: twitter_user.friends_count,
-        data_status: data_status
+        data_status: data_status,
+        lang: twitter_user.lang
       )
+    end
+
+    def string_contains?(twitter_user)
+      return false unless twitter_user.lang == ENV['LOOKUP_LANG']
+      return true if twitter_user.name.include?(ENV['LOOKUP_STRING'])
+      return true if twitter_user.description.include?(ENV['LOOKUP_STRING'])
+      entities = twitter_user.attrs[:entities]
+      if entities[:url]
+        entities[:url][:urls].each do |url|
+          return true if url[:expanded_url]&.include?(ENV['LOOKUP_STRING'])
+        end
+      end
+      if entities[:description]
+        entities[:description][:urls].each do |url|
+          return true if url[:expanded_url]&.include?(ENV['LOOKUP_STRING'])
+        end
+      end
+      false
+    end
+
+    def crawl_friend(internal_id)
+      token_ids = []
+      access_tokens = AccessToken.all
+      500.times { access_tokens.each { |at| token_ids.push(at.id) } }
+      friend_ids = new.connected_by(AccessToken.all.sample.id)
+                      .client.friend_ids(internal_id).take(2000)
+      return false if token_ids.count < friend_ids.count
+      friend_ids.each do |friend_id|
+        user = find_by(internal_id: friend_id)
+        next unless user.nil?
+        begin
+          twitter_user = new.connected_by(token_ids.pop).client.user(friend_id)
+        rescue Twitter::Error => e
+          p e.message
+          next
+        end
+        if string_contains?(twitter_user)
+          create_from_twitter(twitter_user, CRAWLABLE_TARGET_USER)
+        end
+      end
+      update(data_status: CRAWLED_TARGET_USER)
+      true
     end
   end
 
