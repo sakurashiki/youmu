@@ -43,15 +43,13 @@ class User < ApplicationRecord
       return true if twitter_user.name.include?(ENV['LOOKUP_STRING'])
       return true if twitter_user.description.include?(ENV['LOOKUP_STRING'])
       entities = twitter_user.attrs[:entities]
-      if entities[:url]
-        entities[:url][:urls].each do |url|
-          return true if url[:expanded_url]&.include?(ENV['LOOKUP_STRING'])
-        end
+      urls = entities[:url]&.[](:urls)
+      urls&.each do |url|
+        return true if url[:expanded_url]&.include?(ENV['LOOKUP_STRING'])
       end
-      if entities[:description]
-        entities[:description][:urls].each do |url|
-          return true if url[:expanded_url]&.include?(ENV['LOOKUP_STRING'])
-        end
+      urls = entities[:description]&.[](:urls)
+      urls&.each do |url|
+        return true if url[:expanded_url]&.include?(ENV['LOOKUP_STRING'])
       end
       false
     end
@@ -61,7 +59,7 @@ class User < ApplicationRecord
       access_tokens = AccessToken.all
       500.times { access_tokens.each { |at| token_ids.push(at.id) } }
       friend_ids = new.connected_by(AccessToken.all.sample.id)
-                      .client.friend_ids(internal_id).take(2000)
+                      .client.friend_ids(internal_id).take(5000)
       return false if token_ids.count < friend_ids.count
       friend_ids.each do |friend_id|
         user = find_by(internal_id: friend_id)
