@@ -2,16 +2,33 @@
 
 # What is youmu?
 
-Problem: We need to find effective users, when starting twitter ads.
+For effective twitter ads operation, we need to find the massive users. But twitter search does not have enough features.
 
-This script enables you lookup twitter predation target users. Crawler loads user infomation from twitter api, filters and stores them to the database. After that you can download users csv file.
+This script enables you lookup twitter predation target users. Crawler loads user information from twitter api, filters and stores them to the database. After that processing, you can download users by CSV file.
 
 # How to work?
 
-This is very very normal Ruby on Rails apps. Do investigate yourself ðŸ˜ðŸ˜ðŸ˜
+This is very very normal Ruby on Rails apps. Do investigate yourself!Ÿ˜
 
 -> http://rubyonrails.org/
 
+`/config/secrets.yml` need some parameters. For example:
+
+```
+development:
+  secret_key_base: xxxxxxxxxxxxxxxxxxxxxxxxxx
+  twitter_consumer_key: xxxxxxxxxxxxxxxxxxxxxxxxxx
+  twitter_consumer_secret: xxxxxxxxxxxxxxxxxxxxxxxxxx
+  database_username: youmu
+  database_password: ""
+  default_acccess_tokens: {access_token_1}:{access_token_secret_1},{access_token_2}:{access_token_secret_2}
+  first_twitter_users: {twitter_screen_name_1},{twitter_screen_name_2},{twitter_screen_name_3}
+test:
+  secret_key_base: xxxxxxxxxxxxxx
+production:
+  secret_key_base: <%= ENV["SECRET_KEY_BASE"] %>
+```
+
 # License
 
-Still not open source license. Decide to coming soon...
+It still not be under the open source license.
