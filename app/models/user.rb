@@ -74,6 +74,8 @@ class User < ApplicationRecord
         end
         if string_contains?(twitter_user)
           create_from_twitter(twitter_user, CRAWLABLE_TARGET_USER)
+        else
+          create_from_twitter(twitter_user, NOT_TARGET_USER)
         end
       end
       User.where(internal_id: internal_id).update(data_status: CRAWLED_TARGET_USER)
