@@ -65,8 +65,13 @@ class User < ApplicationRecord
       token_ids = []
       access_tokens = AccessToken.all
       500.times { access_tokens.each { |at| token_ids.push(at.id) } }
-      friend_ids = new.connected_by(AccessToken.all.sample.id)
-                      .client.friend_ids(internal_id).take(5000)
+      begin
+        friend_ids = new.connected_by(AccessToken.all.sample.id)
+                        .client.friend_ids(internal_id).take(5000)
+      rescue Twitter::Error::Unauthorized => e
+        p e.message
+        return false
+      end
       return false if token_ids.count < friend_ids.count
       friend_ids.each do |friend_id|
         user = find_by(internal_id: friend_id)
