@@ -61,13 +61,13 @@ class User < ApplicationRecord
       false
     end
 
-    def crawl_friend(internal_id)
+    def crawl_friend(internal_id, rate_limit: 450, max_load_friend: 500)
       token_ids = []
       access_tokens = AccessToken.all
-      450.times { access_tokens.each { |at| token_ids.push(at.id) } }
+      rate_limit.times { access_tokens.each { |at| token_ids.push(at.id) } }
       begin
         friend_ids = new.connected_by(AccessToken.all.sample.id)
-                        .client.friend_ids(internal_id).take(500)
+                        .client.friend_ids(internal_id).take(max_load_friend)
       rescue Twitter::Error::Unauthorized => e
         p e.message
         return false
