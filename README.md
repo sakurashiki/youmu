@@ -52,6 +52,14 @@ User.crawl(limit: 100)
 User.crawl(offset: 10, limit: 100)
 ```
 
+# Download data.
+
+Execute like this script on rails application route directory.
+
+```bash
+bundle exec rails runner 'User.where(data_status: [1,2]).order(followers_count: :desc).each { |u| p "#{u.followers_count},#{u.screen_name},https://twitter.com/#{u.screen_name}" }' 2> /dev/null | sed 's/"//g'
+```
+
 # License
 
 It still not be under the open source license.
