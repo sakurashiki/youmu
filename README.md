@@ -18,7 +18,7 @@ This is very very normal Ruby on Rails apps. Do investigate yourself!
 
 `/config/secrets.yml` need some parameters. For example:
 
-```
+```yml
 development:
   secret_key_base: xxxxxxxxxxxxxxxxxxxxxxxxxx
   twitter_consumer_key: xxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -37,7 +37,7 @@ production:
 
 Execute rails console command on bash.
 
-```bash
+```sh
 LOOKUP_LANG=ja LOOKUP_STRING=soundcloud.com rails c
 ```
 
@@ -56,7 +56,7 @@ User.crawl(offset: 10, limit: 100)
 
 Execute like this script on rails application route directory. The data would be outputted on stdout.
 
-```bash
+```sh
 bundle exec rails runner 'User.where(data_status: [1,2]).order(followers_count: :desc).each { |u| p "#{u.followers_count},#{u.screen_name},https://twitter.com/#{u.screen_name}" }' 2> /dev/null | sed 's/"//g'
 ```
 
