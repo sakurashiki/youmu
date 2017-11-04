@@ -68,6 +68,10 @@ class User < ApplicationRecord
       begin
         friend_ids = new.connected_by(AccessToken.all.sample.id)
                         .client.friend_ids(internal_id).take(max_load_friend)
+      rescue Twitter::RateLimit => e
+        p "#{e.message}: After waiting 1 minute, retry same processing."
+        sleep 1.minute
+        retry
       rescue Twitter::Error::Unauthorized => e
         p e.message
         return false
