@@ -33,7 +33,7 @@ production:
   secret_key_base: <%= ENV["SECRET_KEY_BASE"] %>
 ```
 
-# Execute script.
+# Execute crawler script.
 
 Execute rails console command on bash.
 
@@ -52,9 +52,9 @@ User.crawl(limit: 100)
 User.crawl(offset: 10, limit: 100)
 ```
 
-# Download data.
+# Get target user data.
 
-Execute like this script on rails application route directory.
+Execute like this script on rails application route directory. The data would be outputted on stdout.
 
 ```bash
 bundle exec rails runner 'User.where(data_status: [1,2]).order(followers_count: :desc).each { |u| p "#{u.followers_count},#{u.screen_name},https://twitter.com/#{u.screen_name}" }' 2> /dev/null | sed 's/"//g'
