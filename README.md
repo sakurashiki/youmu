@@ -8,7 +8,7 @@
 
 For effective twitter ads operation, we need to find the massive users to create audience list. But twitter search does not have enough features.
 
-This script enables you lookup twitter predation target users. Crawler loads user information from twitter api, filters and stores them to the database. After that processing, you can download users by CSV file.
+This script enables you lookup twitter predation target users. Crawler loads user information from twitter api, filters them with detail condition and stores them to the database. After that processing, you can download audience list by CSV file.
 
 # Setup youmu.
 
