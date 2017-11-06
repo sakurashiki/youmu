@@ -6,7 +6,7 @@
 
 # What is youmu?
 
-For effective twitter ads operation, we need to find the massive users. But twitter search does not have enough features.
+For effective twitter ads operation, we need to find the massive users to create audience list. But twitter search does not have enough features.
 
 This script enables you lookup twitter predation target users. Crawler loads user information from twitter api, filters and stores them to the database. After that processing, you can download users by CSV file.
 
